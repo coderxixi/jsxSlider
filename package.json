@@ -1,0 +1,16 @@
+{
+  "name": "jsxSlider",
+  "version": "1.0.0",
+  "description": "",
+  "main": "index.js",
+  "scripts": {
+    "test": "echo \"Error: no test specified\" && exit 1",
+    "build" :"rollup -c config/rollup.config.js && rollup -c config/rollup.config.esm.js && rollup -c config/rollup.config.aio.js"
+  },
+  "keywords": [],
+  "author": "",
+  "license": "ISC",
+  "devDependencies": {
+    "rollup": "^3.17.3"
+  }
+}
