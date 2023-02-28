@@ -1,0 +1,45 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8">
+  <meta http-equiv="X-UA-Compatible" content="IE=edge">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>Document</title>
+  <!-- <link rel="stylesheet" href="./src/css/index.css"> -->
+</head>
+<body>
+
+  
+
+
+
+
+  <div id="container">
+
+    <!-- <div id="msg"></div> -->
+  </div>
+ 
+  
+     
+  <script src="./dist/index.umd.js">
+
+  </script>
+  <script>
+    let slid = new captcha(document.getElementById('container'),su function () {
+      document.getElementById('msg').innerHTML = '验证成功';
+      setTimeout(() => {
+        document.getElementById('msg').innerHTML = '';
+      }, 2000);
+    }, function () {
+      console.log('sdafasdf');
+      document.getElementById('msg').innerHTML = '验证失败';
+      setTimeout(() => {
+        // document.getElementById('msg').innerHTML = '';
+      }, 1000);
+    });
+    slid.init()
+    console.log('sild', slid);
+
+  </script>
+</body>
+</html>

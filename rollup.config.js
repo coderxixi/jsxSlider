@@ -1,6 +1,9 @@
 import  resolve  from '@rollup/plugin-node-resolve';
 import typescript from '@rollup/plugin-typescript';
 import commonjs from '@rollup/plugin-commonjs';
+import postcss from "rollup-plugin-postcss";
+import autoprefixer from 'autoprefixer';
+import cssnano from "cssnano"
 export default {
   input: './src/index.ts',
   output:[
@@ -9,6 +12,7 @@ export default {
       format: 'umd',
       entryFileNames: '[name].umd.js',
       name: "captcha",
+     
     },
         {
           dir: 'dist',
@@ -21,7 +25,10 @@ export default {
           entryFileNames: '[name].esm.js',
         }
   ],
-  plugins: [resolve(), commonjs(), typescript()],
+   plugins: [resolve(), commonjs(), typescript(),postcss({
+   
+   plugins:[autoprefixer(),cssnano()],
+  })],
 };
 
 

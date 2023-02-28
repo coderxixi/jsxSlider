@@ -1,26 +1,48 @@
 {
   "name": "jsxSlider",
-  "version": "1.0.0",
+  "version": "0.0.1",
   "description": "",
-  "main": "./dist/index.cjs.js",
-  "module": "./dist/index.esm.js",
+  "main": "dist/index.cjs.js",
+  "module": "dist/index.esm.js",
   "type": "commonjs",
   "scripts": {
     "test": "echo \"Error: no test specified\" && exit 1",
     "build": "rollup -c --bundleConfigAsCjs"
   },
-  "keywords": [],
+  "files": [
+    "dist"
+  ],
+  "keywords": [
+    "jsxSlider",
+    "coderXixi"
+  ],
   "author": "",
   "license": "MIT",
   "devDependencies": {
     "@rollup/plugin-commonjs": "^24.0.1",
     "@rollup/plugin-node-resolve": "^15.0.1",
     "@rollup/plugin-typescript": "^11.0.0",
+    "autoprefixer": "^10.4.13",
+    "cssnano": "^5.1.15",
     "rollup": "^3.17.3",
+    "rollup-plugin-postcss": "^4.0.2",
     "tslib": "^2.5.0"
   },
   "dependencies": {
     "@types/node": "^18.14.2",
     "typescript": "^4.9.5"
-  }
+  },
+  "private": "true",
+  "publishConfig": {
+    "repository": "https://registry.npmjs.org",
+    "access": "public"
+  },
+  "browserslist": [
+    "defaults",
+    "not ie < 8",
+    "last 2 versions",
+    "> 1%",
+    "iOS 7",
+    "last 3 iOS versions"
+  ]
 }

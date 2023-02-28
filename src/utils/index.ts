@@ -1,4 +1,7 @@
   /** @type {HTMLCanvasElement} */
+
+import { resolve } from "path";
+
  
  // 获取指定区间内的随机数
  export function getRandomNumberByRange(start:number,end:number){
@@ -22,6 +25,7 @@
 
   // 获取随机图片
   export function getRandomImg(){
+    // return new Promise((resolve,rejects))
     // 这个网站可以生成随机图片
     return 'https://picsum.photos/300/150/?image='+getRandomNumberByRange(0,100);
 }
