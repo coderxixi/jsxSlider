@@ -1,0 +1,130 @@
+*{
+  margin: 0;
+  padding: 0;
+}
+body{
+  /* 方便演示，满屏居中 */
+  height: 100vh;
+  display: flex;
+  justify-content: center;
+  align-items: center;
+}
+/* 小拼图 */
+.block{
+  position: absolute;
+  left: 0;
+  top: 0;
+}
+/* 滑动条 */
+.slider-container{
+  position: relative;
+  text-align: center;
+  width: 310px;
+  height: 40px;
+  line-height: 40px;
+  margin-top: 15px;
+  background-color: #f7f9fa;
+  color: #45454c;
+  border: 1px solid #e4e7eb;
+}
+.slider-mask{
+  position: absolute;
+  left: 0;
+  top: 0;
+  height: 40px;
+  border: 0px solid #1991fa;
+  background-color: #d1e9fe;
+}
+.slider{
+  position: absolute;
+  left: 0;
+  top: 0;
+  width: 40px;
+  height: 40px;
+  background: #fff;
+  box-shadow: 0 0 3px rgba(0,0,0,0.3);
+  cursor: pointer;
+  transition: background 0.2s linear;
+}
+.slider-icon{
+  position: absolute;
+  left: 13px;
+  top: 15px;
+  width: 14px;
+  height: 10px;
+  background: url(/images/icon_light.png) 0 -26px;
+  background-size: 34px 471px;
+}
+/* 滑动条活动态 */
+.slider-container-active .slider{
+  height: 38px;
+  top: -1px;
+  border: 1px solid #1991fa;
+}
+.slider-container-active .slider-mask{
+  height: 38px;
+  border-width: 1px;
+}
+/* 滑动条成功态 */
+.slider-container-success .slider{
+  height: 38px;
+  top: -1px;
+  border: 1px solid #52ccba;
+  background-color: #52ccba !important;
+}
+.slider-container-success .slider-mask{
+  height: 38px;
+  border: 1px solid #52ccba;
+  background-color: #d2f4ef;
+}
+/* 成功图标 */
+.slider-container-success .slider-icon{
+  background-position: 0 0 !important;
+}
+/* 滑动条失败态 */
+.slider-container-fail .slider{
+  height: 38px;
+  top: -1px;
+  border: 1px solid #f57a7a;
+  background-color: #f57a7a !important;
+}
+.slider-container-fail .slider-mask{
+  height: 38px;
+  border: 1px solid #f57a7a;
+  background-color: #fce1e1;
+}
+/* 失败图标 */
+.slider-container-fail .slider-icon{
+  background-position: 0 -83px !important;
+}
+
+.slider-container-active .slider-text,
+.slider-container-success .slider-text,
+.slider-container-fail .slider-text{
+  display: none;
+}
+
+.slider:hover{
+  background: #1991fa;
+}
+.slider:hover .slider-icon{
+  background-position: 0 -13px;
+}
+
+.refresh-icon{
+  position: absolute;
+  right: 0;
+  top: 0;
+  width: 34px;
+  height: 34px;
+  background: url(/images/icon_light.png) 0 -437px;
+  background-size: 34px 471px;
+  cursor: pointer;
+}
+
+#msg{
+  height: 20px;
+  line-height: 20px;
+  text-align: center;
+  margin-top: 15px;
+}
