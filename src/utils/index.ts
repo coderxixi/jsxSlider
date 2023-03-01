@@ -23,19 +23,36 @@ import { resolve } from "path";
   return canvas;
 }
 
+
   // 获取随机图片
-  export function getRandomImg(){
-    // return new Promise((resolve,rejects))
+  export function getRandomImg():any{
+    //    let url='https://picsum.photos/300/150/?image=' + getRandomNumberByRange(0, 100);
+
+    // return new Promise((resolve,reject)=>{
+    //     console.log('url',url);
+        
+    //     setTimeout(()=>{
+    //        return  resolve(url);
+    //     },1000)
+      
+    // }) 
+  
+  
+    return 'https://picsum.photos/300/150/?image=' + getRandomNumberByRange(0, 100)
+    
     // 这个网站可以生成随机图片
-    return 'https://picsum.photos/300/150/?image='+getRandomNumberByRange(0,100);
+    
 }
 
 // 创建图片
-export function createImg(onload:()=>void){
+export  function createImg(onload:()=>void){
     const img=createElement<HTMLImageElement>('img');
     img.crossOrigin='Anonymous';
     img.onload=onload;
-    img.onerror=()=>{
+
+    
+     
+    img.onerror= ()=>{
         img.src=getRandomImg();
     }
     img.src=getRandomImg();

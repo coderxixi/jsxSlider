@@ -1,4 +1,5 @@
 import { getRandomNumberByRange, removeClass, createElement, getRandomImg, createCanvas, draw, createImg, addClass } from "@/utils/index"
+import { log } from "console";
 import {sliderOption} from "./type"
 export class Captcha {
     // 构造器
@@ -25,6 +26,7 @@ export class Captcha {
         this.ll = this.l + this.r * 2; //滑块的实际边长
         this.x = x;
         this.y = y;
+       
     }
 
     // 初始化
@@ -105,6 +107,7 @@ export class Captcha {
         this.y = getRandomNumberByRange(10 + this.r * 2, this.h - (this.ll + 10));
         draw(this.canvasCtx, 'fill', this.x, this.y, this.l, this.r);
         draw(this.blockCtx, 'clip', this.x, this.y, this.l, this.r);
+        this.msgDiv.innerHTML=''
        
     }
 
@@ -222,16 +225,18 @@ export class Captcha {
     }
 
     // 重置
-    reset() {
+    async reset() {
         this.msgDiv.innerHTML='加载中...!'
-        // this.msgDiv.className='';
         this.sliderContainer.className = 'slider-container';
         this.slider.style.left = '0';
         this.block.style.left = 0;
         this.sliderMask.style.width = 0;
         this.clean();
+    //    let res= await getRandomImg();
+    //    console.log('res',res);
+       
         this.img.src = getRandomImg();
-
+        this.msgDiv.innerHTML=''
         this.draw();
     }
     // 验证
