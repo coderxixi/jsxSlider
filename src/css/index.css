@@ -23,7 +23,7 @@ body{
 .slider-container{
   position: relative;
   text-align: center;
-  width: 310px;
+  /* width: 310px; */
   height: 40px;
   line-height: 40px;
   margin-top: 15px;
@@ -46,7 +46,7 @@ body{
   width: 40px;
   height: 40px;
   background: #fff;
-  box-shadow: 0 0 3px rgba(0,0,0,0.3);
+  box-shadow: 0 0 3px rgba(0,0,0,0.5);
   cursor: pointer;
   transition: background 0.2s linear;
 }
@@ -56,7 +56,7 @@ body{
   top: 15px;
   width: 14px;
   height: 10px;
-  background: url(/images/icon_light.png) 0 -26px;
+  /* background: url(/images/icon_light.png) 0 -26px; */
   background-size: 34px 471px;
 }
 /* 滑动条活动态 */
@@ -121,7 +121,7 @@ body{
   top: 0;
   width: 34px;
   height: 34px;
-  background: url(/images/icon_light.png) 0 -437px;
+  /* background: url(/images/icon_light.png) 0 -437px; */
   background-size: 34px 471px;
   cursor: pointer;
 }
