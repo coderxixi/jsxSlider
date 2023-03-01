@@ -1,8 +1,9 @@
 {
-  "name": "jsxSlider",
+  "name": "jsxslider",
   "version": "0.0.1",
   "description": "",
   "main": "dist/index.cjs.js",
+  "jsnext:main": "dist/index.esm.js",
   "module": "dist/index.esm.js",
   "type": "commonjs",
   "scripts": {
@@ -21,6 +22,7 @@
   "devDependencies": {
     "@rollup/plugin-commonjs": "^24.0.1",
     "@rollup/plugin-node-resolve": "^15.0.1",
+    "@rollup/plugin-terser": "^0.4.0",
     "@rollup/plugin-typescript": "^11.0.0",
     "autoprefixer": "^10.4.13",
     "cssnano": "^5.1.15",
@@ -30,9 +32,10 @@
   },
   "dependencies": {
     "@types/node": "^18.14.2",
+    "D": "^1.0.0",
+    "jsxslider": "^0.0.1",
     "typescript": "^4.9.5"
   },
-  "private": "true",
   "publishConfig": {
     "repository": "https://registry.npmjs.org",
     "access": "public"

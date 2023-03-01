@@ -3,7 +3,8 @@ import typescript from '@rollup/plugin-typescript';
 import commonjs from '@rollup/plugin-commonjs';
 import postcss from "rollup-plugin-postcss";
 import autoprefixer from 'autoprefixer';
-import cssnano from "cssnano"
+import cssnano from "cssnano";
+import terser from '@rollup/plugin-terser'
 export default {
   input: './src/index.ts',
   output:[
@@ -25,7 +26,7 @@ export default {
           entryFileNames: '[name].esm.js',
         }
   ],
-   plugins: [resolve(), commonjs(), typescript(),postcss({
+   plugins: [terser(),resolve(), commonjs(), typescript(),postcss({
    
    plugins:[autoprefixer(),cssnano()],
   })],
