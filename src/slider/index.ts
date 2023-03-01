@@ -1,5 +1,5 @@
 import { getRandomNumberByRange, removeClass, createElement, getRandomImg, createCanvas, draw, createImg, addClass } from "@/utils/index"
-
+import {sliderOption} from "./type"
 export class Captcha {
     // 构造器
     private el: HTMLElement;
@@ -11,15 +11,17 @@ export class Captcha {
     sliderContainer: any;
     trail: any[] | undefined;
     refreshIcon: any;
+    private option:sliderOption
    
-    constructor(el: HTMLElement, success: () => {}, fail: () => {},private blockCtx: any, private slider: HTMLElement, private canvasCtx: any,  private y: number, private x: number, private ll: number, private r: number, private w: number = 310, private h: number = 155, private l: number,private msgDiv:HTMLElement) {
-        this.el = el;
-        this.success = success;
-        this.fail = fail;
-        this.w = w; //canvas宽度
-        this.h = h; //canvas高度
-        this.l = 42;//滑块边长
-        this.r = 10;//滑块半径 
+    constructor(option:sliderOption,el: HTMLElement, success: () => {}, fail: () => {},private blockCtx: any, private slider: HTMLElement, private canvasCtx: any,  private y: number, private x: number, private ll: number, private r: number, private w: number = 310, private h: number = 155, private l: number,private msgDiv:HTMLElement) {
+        this.option=option
+        this.el =option.el;
+        this.success =option.success;
+        this.fail =option.fail;
+        this.w = option.w?option.w:w; //canvas宽度
+        this.h = option.w?option.w:h; //canvas高度
+        this.l =option.l? option.l:42;//滑块边长
+        this.r = option.r?option.r: 10;//滑块半径 
         this.ll = this.l + this.r * 2; //滑块的实际边长
         this.x = x;
         this.y = y;
@@ -103,6 +105,7 @@ export class Captcha {
         this.y = getRandomNumberByRange(10 + this.r * 2, this.h - (this.ll + 10));
         draw(this.canvasCtx, 'fill', this.x, this.y, this.l, this.r);
         draw(this.blockCtx, 'clip', this.x, this.y, this.l, this.r);
+       
     }
 
     // 清除
@@ -158,8 +161,57 @@ export class Captcha {
                 this.success && this.success();
             } else {
                 addClass(this.sliderContainer, 'slider-container-fail');
-                console.log('ad',this.msgDiv);
-                
+                this.msgDiv.innerHTML='验证失败!'
+                addClass(this.msgDiv,'active')
+                this.fail && this.fail();
+                setTimeout(() => {
+                    this.reset();
+                }, 1000);
+            }
+        })
+
+        //移动端
+        this.slider.addEventListener('touchstart', function (e) {
+            originX = e.touches[0].pageX;
+            originY = e.touches[0].pageY;
+            isMouseDown = true;
+        })
+        document.addEventListener('touchmove', (e) => {
+            if (!isMouseDown) {
+                return false;
+            }
+            const moveX = e.touches[0].pageX - originX;
+            const moveY = e.touches[0].pageY - originY;
+            if (moveX < 0 || moveX + 38 >= this.w) {
+                return false;
+            }
+            this.slider.style.left = moveX + 'px';
+            var blockLeft = (this.w - 40 - 20) / (this.w - 40) * moveX;
+            this.block.style.left = blockLeft + 'px';
+
+            addClass(this.sliderContainer, 'slider-container-active');
+            this.sliderMask.style.width = moveX + 'px';
+            //   trail.push(moveY);
+        })
+        document.addEventListener('touchend', (e) => {
+            console.log('touchend',e);
+            
+            if (!isMouseDown) {
+                return false;
+            }
+            isMouseDown = false;
+            if (e.changedTouches[0].pageX == originX) {
+                return false;
+            }
+            removeClass(this.sliderContainer, 'slider-container-active');
+            this.trail = trail;
+            const spliced = this.verify();
+            if (spliced) {
+                addClass(this.sliderContainer, 'slider-container-success');
+                this.success && this.success();
+            } else {
+                addClass(this.sliderContainer, 'slider-container-fail');
+                this.msgDiv.innerHTML='验证失败!'
                 addClass(this.msgDiv,'active')
                 this.fail && this.fail();
                 setTimeout(() => {
@@ -171,7 +223,8 @@ export class Captcha {
 
     // 重置
     reset() {
-        this.msgDiv.className='';
+        this.msgDiv.innerHTML='加载中...!'
+        // this.msgDiv.className='';
         this.sliderContainer.className = 'slider-container';
         this.slider.style.left = '0';
         this.block.style.left = 0;
