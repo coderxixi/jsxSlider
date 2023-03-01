@@ -72,7 +72,7 @@ export class Captcha {
         captcha.appendChild(sliderContainer);
         el.appendChild(captcha);
         el.insertAdjacentElement("beforeend",msgDiv)
-        document.body.appendChild(el)
+      
         Object.assign(this, {
             canvas,
             block,
