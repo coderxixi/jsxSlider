@@ -1,5 +1,6 @@
 export interface sliderOption {
   el: HTMLElement,
+  customVerification?:()=>{},
   success: () => {},
   fail:()=>{},
   l:number,

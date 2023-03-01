@@ -8,11 +8,13 @@
     "strict": true,                                      /* Enable all strict type-checking options. */
     "skipLibCheck": true  ,
     "baseUrl": "./",
+   
     "paths": {
       "@/utils/*": ["src/utils/*"]
-    }
+    },
+   
   },
-
+  
   "include": ["src/**/*"],
   "exclude": [
     "node_modules",

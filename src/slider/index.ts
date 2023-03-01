@@ -4,7 +4,7 @@ import {sliderOption} from "./type"
 export class Captcha {
     // 构造器
     private el: HTMLElement;
-    private success: () => {};
+    private success: (number:number) => {};
     private fail: () => {};
     block: any;
     img: any;
@@ -20,7 +20,7 @@ export class Captcha {
         this.success =option.success;
         this.fail =option.fail;
         this.w = option.w?option.w:w; //canvas宽度
-        this.h = option.w?option.w:h; //canvas高度
+        this.h = option.h?option.h:h; //canvas高度
         this.l =option.l? option.l:42;//滑块边长
         this.r = option.r?option.r: 10;//滑块半径 
         this.ll = this.l + this.r * 2; //滑块的实际边长
@@ -54,6 +54,7 @@ export class Captcha {
             msgDiv.style.width=this.w+'px';
             msgDiv.style.height=this.h+'px';
         block.className = 'block';
+        sliderContainer.style.width=this.w+'px';
         sliderContainer.className = 'slider-container';
         sliderMask.className = 'slider-mask';
         slider.className = 'slider';
@@ -70,8 +71,9 @@ export class Captcha {
         sliderContainer.appendChild(sliderMask);
         sliderContainer.appendChild(text);
         captcha.appendChild(sliderContainer);
+        captcha.insertAdjacentElement("beforeend",msgDiv)
         el.appendChild(captcha);
-        el.insertAdjacentElement("beforeend",msgDiv)
+      
       
         Object.assign(this, {
             canvas,
@@ -148,7 +150,7 @@ export class Captcha {
             this.sliderMask.style.width = moveX + 'px';
             //   trail.push(moveY);
         })
-        document.addEventListener('mouseup', (e) => {
+        document.addEventListener('mouseup',async (e) => {
             if (!isMouseDown) {
                 return false;
             }
@@ -158,10 +160,32 @@ export class Captcha {
             }
             removeClass(this.sliderContainer, 'slider-container-active');
             this.trail = trail;
+          
+           if(this.option.customVerification){
+            this.msgDiv.innerHTML='加载中...!'
+            addClass(this.msgDiv,'active')
+            let res= await this.option.customVerification();
+            if(res>=5){
+               
+                addClass(this.sliderContainer, 'slider-container-success');
+                this.success && this.success(parseInt(this.block.style.left));
+            }else{
+                addClass(this.sliderContainer, 'slider-container-fail');
+                this.msgDiv.innerHTML='验证失败!'
+                addClass(this.msgDiv,'active')
+                this.fail && this.fail();
+                setTimeout(() => {
+                    this.reset();
+                }, 1000);
+            }
+          
+            return
+           }
+
             const spliced = this.verify();
             if (spliced) {
                 addClass(this.sliderContainer, 'slider-container-success');
-                this.success && this.success();
+                this.success && this.success(parseInt(this.block.style.left));
             } else {
                 addClass(this.sliderContainer, 'slider-container-fail');
                 this.msgDiv.innerHTML='验证失败!'
@@ -196,7 +220,7 @@ export class Captcha {
             this.sliderMask.style.width = moveX + 'px';
             //   trail.push(moveY);
         })
-        document.addEventListener('touchend', (e) => {
+        document.addEventListener('touchend', async(e) => {
             console.log('touchend',e);
             
             if (!isMouseDown) {
@@ -207,11 +231,31 @@ export class Captcha {
                 return false;
             }
             removeClass(this.sliderContainer, 'slider-container-active');
+            if(this.option.customVerification){
+                this.msgDiv.innerHTML='加载中...!'
+                addClass(this.msgDiv,'active')
+                let res= await this.option.customVerification();
+                if(res>=5){
+                    
+                    addClass(this.sliderContainer, 'slider-container-success');
+                    this.success && this.success(parseInt(this.block.style.left));
+                }else{
+                    addClass(this.sliderContainer, 'slider-container-fail');
+                    this.msgDiv.innerHTML='验证失败!'
+                    addClass(this.msgDiv,'active')
+                    this.fail && this.fail();
+                    setTimeout(() => {
+                        this.reset();
+                    }, 1000);
+                }
+              
+                return
+               }
             this.trail = trail;
             const spliced = this.verify();
             if (spliced) {
                 addClass(this.sliderContainer, 'slider-container-success');
-                this.success && this.success();
+                this.success && this.success(parseInt(this.block.style.left));
             } else {
                 addClass(this.sliderContainer, 'slider-container-fail');
                 this.msgDiv.innerHTML='验证失败!'
@@ -231,6 +275,7 @@ export class Captcha {
         this.slider.style.left = '0';
         this.block.style.left = 0;
         this.sliderMask.style.width = 0;
+        this.msgDiv.className=''
         this.clean();
     //    let res= await getRandomImg();
     //    console.log('res',res);

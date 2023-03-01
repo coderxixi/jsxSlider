@@ -1,11 +1,11 @@
 
-body{
-  /* 方便演示，满屏居中 */
+/* body{
+  
   height: 100vh;
   display: flex;
   justify-content: center;
   align-items: center;
-}
+} */
 #container{
   position: relative;
 }
